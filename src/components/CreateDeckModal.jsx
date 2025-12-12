@@ -1,21 +1,13 @@
 import React, { useState } from 'react'
 import useStore from '../store'
+import { X } from 'lucide-react'
 
 function CreateDeckModal({ onClose }) {
     const addDeck = useStore((state) => state.addDeck)
     const [name, setName] = useState('')
-    const [color, setColor] = useState('#0ea5e9')
+    const [color, setColor] = useState('#3b82f6')
 
-    const colors = [
-        '#0ea5e9', // primary blue
-        '#d946ef', // accent purple
-        '#22c55e', // green
-        '#f97316', // orange
-        '#ef4444', // red
-        '#eab308', // yellow
-        '#06b6d4', // cyan
-        '#8b5cf6', // violet
-    ]
+    const colors = ['#3b82f6', '#8b5cf6', '#22c55e', '#f97316', '#ef4444', '#eab308', '#06b6d4', '#ec4899']
 
     const handleCreate = () => {
         if (name.trim()) {
@@ -25,33 +17,36 @@ function CreateDeckModal({ onClose }) {
     }
 
     return (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="glass-card p-6 w-full max-w-md animate-slide-up">
-                <h2 className="text-2xl font-bold mb-6">Create New Deck</h2>
+        <div className="fixed inset-0 modal-backdrop flex items-center justify-center z-50 p-4">
+            <div className="card p-5 w-full max-w-sm animate-fade-in">
+                <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-lg font-semibold text-white">New Deck</h2>
+                    <button onClick={onClose} className="text-slate-500 hover:text-white">
+                        <X className="w-5 h-5" />
+                    </button>
+                </div>
 
-                <div className="space-y-6">
+                <div className="space-y-4">
                     <div>
-                        <label className="block text-sm text-slate-400 mb-2">Deck Name</label>
+                        <label className="block text-xs text-slate-500 mb-1">Deck Name</label>
                         <input
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder="e.g., Spanish Vocabulary"
-                            className="input-glass"
+                            className="input-field"
                             autoFocus
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm text-slate-400 mb-3">Color</label>
-                        <div className="flex flex-wrap gap-3">
+                        <label className="block text-xs text-slate-500 mb-2">Color</label>
+                        <div className="flex gap-2">
                             {colors.map((c) => (
                                 <button
                                     key={c}
                                     onClick={() => setColor(c)}
-                                    className={`w-10 h-10 rounded-xl transition-all ${color === c
-                                            ? 'ring-2 ring-white ring-offset-2 ring-offset-slate-900 scale-110'
-                                            : 'hover:scale-110'
+                                    className={`w-7 h-7 rounded-lg transition-transform ${color === c ? 'ring-2 ring-white ring-offset-2 ring-offset-[#1e293b] scale-110' : 'hover:scale-110'
                                         }`}
                                     style={{ backgroundColor: c }}
                                 />
@@ -60,20 +55,9 @@ function CreateDeckModal({ onClose }) {
                     </div>
                 </div>
 
-                <div className="flex gap-3 mt-8">
-                    <button
-                        onClick={onClose}
-                        className="btn-secondary flex-1"
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        onClick={handleCreate}
-                        className="btn-primary flex-1"
-                        disabled={!name.trim()}
-                    >
-                        Create Deck
-                    </button>
+                <div className="flex gap-2 mt-5">
+                    <button onClick={onClose} className="btn-secondary flex-1">Cancel</button>
+                    <button onClick={handleCreate} className="btn-primary flex-1" disabled={!name.trim()}>Create</button>
                 </div>
             </div>
         </div>

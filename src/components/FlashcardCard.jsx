@@ -5,32 +5,25 @@ function FlashcardCard({ card, isFlipped, onFlip }) {
     if (!card) return null
 
     return (
-        <div
-            className={`flip-card h-72 cursor-pointer ${isFlipped ? 'flipped' : ''}`}
-            onClick={onFlip}
-        >
+        <div className={`flip-card h-48 sm:h-56 cursor-pointer ${isFlipped ? 'flipped' : ''}`} onClick={onFlip}>
             <div className="flip-card-inner">
                 {/* Front */}
-                <div className="flip-card-front glass-card p-8 flex flex-col items-center justify-center">
-                    <p className="text-xs text-slate-400 uppercase tracking-wider mb-4">Question</p>
-                    <p className="text-xl lg:text-2xl font-semibold text-center leading-relaxed">
-                        {card.front}
-                    </p>
-                    <div className="absolute bottom-6 flex items-center gap-2 text-slate-400 text-sm">
-                        <RotateCw className="w-4 h-4" />
-                        Click to flip
+                <div className="flip-card-front card p-6 flex flex-col items-center justify-center bg-[#1e293b]">
+                    <span className="text-[10px] uppercase tracking-wider text-slate-500 mb-2">Question</span>
+                    <p className="text-lg sm:text-xl font-medium text-white text-center leading-relaxed">{card.front}</p>
+                    <div className="absolute bottom-4 flex items-center gap-1.5 text-slate-500 text-xs">
+                        <RotateCw className="w-3 h-3" />
+                        Tap to flip
                     </div>
                 </div>
 
                 {/* Back */}
-                <div className="flip-card-back glass-card p-8 flex flex-col items-center justify-center bg-gradient-to-br from-primary-900/50 to-accent-900/50">
-                    <p className="text-xs text-primary-300 uppercase tracking-wider mb-4">Answer</p>
-                    <p className="text-xl lg:text-2xl font-semibold text-center leading-relaxed">
-                        {card.back}
-                    </p>
-                    <div className="absolute bottom-6 flex items-center gap-2 text-slate-400 text-sm">
-                        <RotateCw className="w-4 h-4" />
-                        Click to flip back
+                <div className="flip-card-back card p-6 flex flex-col items-center justify-center bg-[#1e3a5f]">
+                    <span className="text-[10px] uppercase tracking-wider text-blue-400 mb-2">Answer</span>
+                    <p className="text-lg sm:text-xl font-medium text-white text-center leading-relaxed">{card.back}</p>
+                    <div className="absolute bottom-4 flex items-center gap-1.5 text-slate-400 text-xs">
+                        <RotateCw className="w-3 h-3" />
+                        Tap to flip
                     </div>
                 </div>
             </div>
