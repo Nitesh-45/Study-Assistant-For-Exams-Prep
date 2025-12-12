@@ -134,6 +134,43 @@ function FlashcardDeck() {
                 {showCreateModal && (
                     <CreateDeckModal onClose={() => setShowCreateModal(false)} />
                 )}
+
+                {/* Delete Confirmation Modal for Deck List View */}
+                {deleteConfirm.show && (
+                    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                        <div className="glass-card p-6 w-full max-w-sm animate-slide-up">
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-xl font-bold text-red-400">Confirm Delete</h2>
+                                <button
+                                    onClick={() => setDeleteConfirm({ show: false, type: null, id: null })}
+                                    className="text-slate-400 hover:text-white"
+                                >
+                                    <X className="w-5 h-5" />
+                                </button>
+                            </div>
+
+                            <p className="text-slate-300 mb-6">
+                                Are you sure you want to delete <span className="font-semibold text-white">"{deleteConfirm.name}"</span>?
+                                {deleteConfirm.type === 'deck' && ' All cards in this deck will be deleted.'}
+                            </p>
+
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => setDeleteConfirm({ show: false, type: null, id: null })}
+                                    className="btn-secondary flex-1"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={handleDelete}
+                                    className="flex-1 py-3 px-4 rounded-xl font-semibold bg-red-500 hover:bg-red-600 text-white transition-colors"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         )
     }
