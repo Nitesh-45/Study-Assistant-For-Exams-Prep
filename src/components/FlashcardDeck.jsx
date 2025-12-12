@@ -24,6 +24,7 @@ function FlashcardDeck() {
     const [newCardBack, setNewCardBack] = useState('')
     const [isFlipped, setIsFlipped] = useState(false)
     const [deleteConfirm, setDeleteConfirm] = useState({ show: false, type: null, id: null })
+    const [studiedInSession, setStudiedInSession] = useState(new Set())
 
     const currentDeck = decks.find(d => d.id === currentDeckId)
     const currentCard = currentDeck?.cards[currentCardIndex]
@@ -37,9 +38,6 @@ function FlashcardDeck() {
         setDeleteConfirm({ show: false, type: null, id: null })
     }
 
-    // Track which cards have been studied in current session to avoid double-counting
-    const [studiedCardIds, setStudiedCardIds] = useState(new Set())
-
     const handleAddCard = () => {
         if (newCardFront.trim() && newCardBack.trim() && currentDeckId) {
             addCard(currentDeckId, newCardFront.trim(), newCardBack.trim())
@@ -50,14 +48,14 @@ function FlashcardDeck() {
     }
 
     const handleFlip = () => {
-        const newFlipped = !isFlipped
-        setIsFlipped(newFlipped)
-
-        // Record study when flipping to reveal answer (not when flipping back)
-        if (newFlipped && currentCard && !studiedCardIds.has(currentCard.id)) {
-            recordStudy()
-            setStudiedCardIds(prev => new Set([...prev, currentCard.id]))
+        if (!isFlipped && currentCard) {
+            // Recording study when revealing the answer (first flip)
+            if (!studiedInSession.has(currentCard.id)) {
+                recordStudy()
+                setStudiedInSession(prev => new Set([...prev, currentCard.id]))
+            }
         }
+        setIsFlipped(!isFlipped)
     }
 
     const handleNextCard = () => {
